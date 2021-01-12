@@ -1,4 +1,3 @@
-#Modules
 import os
 import csv
 
@@ -6,6 +5,14 @@ import csv
 Pybank_csv = os.path.join("..", "PyBank", "Resources", "budget_data.csv")
 
 #List to store the monthly changes?
+
+
+#write a function for summing the profits/losses
+def sum(numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
 
 #Write a function for calculating the average for monthly profit/loss changes. This is probably not going to be used in final version but works to get the correct number.
 def average_change(numbers):
@@ -44,7 +51,7 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
     #Read header, store the header row 
     csvheader = next(csvfile)
  
-    #Loop through the rows in the list
+    #i don't know if the for j part works, but the for i works great to transform that list into integers. I doubt the for j part works.
     for row in csvreader:
        #Start counter for counting rows: aka number of months
         total_months = total_months + 1
