@@ -58,8 +58,9 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
         #loop through and calculate sum
         total_sum = total_sum + int(row[1])
 
-        #subtract profit/loss value in previous row from value in profit/loss column in next row 
+        #subtract profit/loss value in previous row from value in profit/loss column in next row. Append the changes to a new list, also append the corresponding dates to a new list. 
         monthly_change = int(row[1]) - previous_row
+        #Note that it's only storing AFTER the first row has passed
         if total_months >= 1:
             change_list.append(monthly_change)
             date_list.append(row[0])
@@ -71,9 +72,12 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
 
        #Can easily get an average from change_list and also search max/min values in that list...but how in the world do I do that in the original list to be able to match it up with original date?? Append original list with change data??
 
+#Zip the list of dates and changes together
 change_date_list = zip(date_list, change_list)
 for dates in change_date_list:
     print(dates)
+
+    
 #Print output to terminal. Need to save everything into a text file output - is the output to the terminal from the text file or do I do as below??
 print(f'Financial Analysis')
 print(f'---------------------------')

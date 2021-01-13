@@ -74,7 +74,7 @@ for date in change_date_list:
         min_date = date[0] 
     
     
-#Print output to terminal. Need to save everything into a text file output - is the output to the terminal from the text file or do I do as below??
+#Print output to terminal. 
 print(f'Financial Analysis')
 print(f'---------------------------')
 print(f'Total Months: {total_months}')
