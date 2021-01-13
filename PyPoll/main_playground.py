@@ -50,27 +50,19 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
             candidate_votes_dict[candidate] = 0
         candidate_votes_dict[candidate] = candidate_votes_dict[candidate] + 1
 
-        #
- 
-
-print(candidate_votes_dict)
-
-#Calculate percent for each candidate
-Khan_percent = round((Khan/total_votes) * 100, 3)
-Correy_percent = round((Correy/total_votes) * 100, 3)
-Li_percent = round((Li/total_votes) * 100, 3)
-O_Tooley_percent = round((O_Tooley/total_votes) * 100, 3)
-
-
-
+#Print first part of results in GitBash so that they don't loop 
 print(f'Election Results')
 print(f'---------------------------')
 print(f'Total Votes: {total_votes}')
 print(f'---------------------------')
-print(f'Khan: {Khan_percent}% ({Khan})')
-print(f'Correy: {Correy_percent}% ({Correy})')
-print(f'Li: {Li_percent}% ({Li})')
-print(f"O'Tooley: {O_Tooley_percent}% ({O_Tooley})")
-print(f'---------------------------')
-print(f'Winner:')
-print(f'---------------------------')
+
+
+    #Calculates percentage of votes for each candidate
+    for candidate in candidate_votes_dict:
+        percentage = round(float(candidate_votes_dict[candidate])/float(total_votes) * 100, 3)
+
+        def candidate_data():
+            print(f'{candidate}: {percentage}% ({candidate_votes_dict[candidate]})')
+            
+        candidate_data()
+
