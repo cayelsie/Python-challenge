@@ -16,7 +16,6 @@ total_votes = 0
 #Set initial variable for the highest amount of votes (winner)
 max_votes = 0
 
-
 #open the file as csv
 with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
     
@@ -50,24 +49,44 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
     print(f'Total Votes: {total_votes}')
     print(f'---------------------------')
 
+        
+    #Store first part of results in a text file
+    output_path = os.path.join("..", "PyPoll", "Analysis", "election_results.txt")
+    with open(output_path, 'w', newline="") as txtfile:
+        txtfile.write(f'Election Results\n')
+        txtfile.write(f'---------------------------\n')
+        txtfile.write(f'Total Votes: {total_votes}\n')
+        txtfile.write(f'---------------------------\n') 
 
-    #Calculates percentage of votes for each candidate
-    for candidate in candidate_votes_dict:
-        percentage = round(float(candidate_votes_dict[candidate])/float(total_votes) * 100, 3)
 
-        #Write function to display and print vote information for each candidate
-        def candidate_data():
-            print(f'{candidate}: {percentage}% ({candidate_votes_dict[candidate]})')
+        #Calculates percentage of votes for each candidate
+        for candidate in candidate_votes_dict:
+            percentage = float(candidate_votes_dict[candidate])/float(total_votes) * 100
 
-        #call the function for printing candidate information in GitBash    
-        candidate_data()
+            #Declare a variable for printing each candidate's stats
+            candidate_data = (f'{candidate}: {percentage: .3f}% ({candidate_votes_dict[candidate]})\n')
 
-        #Search for the largest vote count by candidate. Store the largest and store the accompanying candidate 
-        if candidate_votes_dict[candidate] > max_votes:
-            max_votes = candidate_votes_dict[candidate]
-            winner = candidate
+            #Write each candidate's stats in the txt file
+            txtfile.write(candidate_data)
 
-    #Print out the winner in GitBash 
-    print(f'---------------------------') 
-    print(f'Winner: {winner}')
-    print(f'---------------------------')    
+            #Print each candidate's stats in GitBash
+            print(candidate_data)
+
+            #Search for the largest vote count by candidate. Store the largest and store the accompanying candidate 
+            if candidate_votes_dict[candidate] > max_votes:
+                max_votes = candidate_votes_dict[candidate]
+                winner = candidate
+
+        #Print out the winner in GitBash 
+        print(f'---------------------------') 
+        print(f'Winner: {winner}')
+        print(f'---------------------------')
+
+        #Print the winner in the txt file
+        txtfile.write(f'---------------------------\n')
+        txtfile.write(f'Winner: {winner}\n')
+        txtfile.write(f'---------------------------\n')
+
+
+
+           
