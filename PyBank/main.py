@@ -5,7 +5,7 @@ import csv
 #build relative file path
 Pybank_csv = os.path.join("..", "PyBank", "Resources", "budget_data.csv")
 
-#List to store the monthly changes?
+#List to store the monthly changes
 change_list = []
 
 #List to store the dates that go with the monthly change calcs
@@ -46,7 +46,7 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
 
         #subtract profit/loss value in previous row from value in profit/loss column in next row. Append the changes to a new list, also append the corresponding dates to a new list. 
         monthly_change = int(row[1]) - previous_row
-        
+
         #Note that it's only storing AFTER the first row has passed
         if total_months >= 1:
             change_list.append(monthly_change)
@@ -56,9 +56,7 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
 
         #Start counter for counting rows: aka number of months
         total_months = total_months + 1
-
-       #Can easily get an average from change_list and also search max/min values in that list...but how in the world do I do that in the original list to be able to match it up with original date?? Append original list with change data??
-
+     
 #Zip the list of dates and changes together
 change_date_list = zip(date_list, change_list)
 
@@ -89,3 +87,13 @@ print(f'Average Change: ${average_change(change_list)}')
 print(f'Greatest Increase in Profits: {max_date} (${max_increase})')
 print(f'Greatest Decrease in Profits: {min_date} (${max_decrease})')
 
+#Store in a text file
+output_path = os.path.join("..", "PyBank", "Analysis", "financial_analysis.txt")
+with open(output_path, 'w', newline="") as txtfile:
+    txtfile.write(f'Financial Analysis\n')
+    txtfile.write(f'---------------------------\n')
+    txtfile.write(f'Total Months: {total_months}\n')
+    txtfile.write(f'Total: ${total_sum}\n')
+    txtfile.write(f'Average Change: ${average_change(change_list)}\n')
+    txtfile.write(f'Greatest Increase in Profits: {max_date} (${max_increase})\n')
+    txtfile.write(f'Greatest Decrease in Profits: {min_date} (${max_decrease})\n')
