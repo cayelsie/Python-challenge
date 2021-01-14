@@ -46,6 +46,7 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
 
         #subtract profit/loss value in previous row from value in profit/loss column in next row. Append the changes to a new list, also append the corresponding dates to a new list. 
         monthly_change = int(row[1]) - previous_row
+        
         #Note that it's only storing AFTER the first row has passed
         if total_months >= 1:
             change_list.append(monthly_change)
@@ -61,20 +62,25 @@ with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
 #Zip the list of dates and changes together
 change_date_list = zip(date_list, change_list)
 
-#Set initial variables for max increase and decrease
+#Set initial variables for max increase and decrease in profits
 max_increase = 0
 max_decrease = 0
 
+#Loop through the new list of dates and profit/loss changes per month
 for date in change_date_list:
+    
+    #Find the max increase in profits and store
     if date[1] > max_increase:
         max_increase = date[1]
         max_date = date[0]
+    
+    #Find the max decrease in profits and store
     if date[1] < max_decrease:
         max_decrease =  date[1]
         min_date = date[0] 
     
     
-#Print output to terminal. 
+#Print output to GitBash
 print(f'Financial Analysis')
 print(f'---------------------------')
 print(f'Total Months: {total_months}')
