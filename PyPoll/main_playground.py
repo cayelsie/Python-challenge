@@ -13,14 +13,9 @@ candidate_votes_dict = {}
 #Set initial variable for the number of votes
 total_votes = 0
 
-#Set initial variable for the winner's name
-winner = ""
+#Set initial variable for the highest amount of votes (winner)
+max_votes = 0
 
-#Set intiial variable of winner's votes to 0
-winner_votes = 0
-
-#Set initial variable of winner's percentage to 0
-winner_percentage = 0
 
 #open the file as csv
 with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
@@ -50,19 +45,29 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
             candidate_votes_dict[candidate] = 0
         candidate_votes_dict[candidate] = candidate_votes_dict[candidate] + 1
 
-#Print first part of results in GitBash so that they don't loop 
-print(f'Election Results')
-print(f'---------------------------')
-print(f'Total Votes: {total_votes}')
-print(f'---------------------------')
+    #Print first part of results in GitBash so that they don't loop later
+    print(f'Election Results')
+    print(f'---------------------------')
+    print(f'Total Votes: {total_votes}')
+    print(f'---------------------------')
 
 
     #Calculates percentage of votes for each candidate
     for candidate in candidate_votes_dict:
         percentage = round(float(candidate_votes_dict[candidate])/float(total_votes) * 100, 3)
 
+        #Write function to display and print vote information for each candidate
         def candidate_data():
             print(f'{candidate}: {percentage}% ({candidate_votes_dict[candidate]})')
-            
+
+        #call the function for printing candidate information    
         candidate_data()
 
+         
+        if candidate_votes_dict[candidate] > max_votes:
+            max_votes = candidate_votes_dict[candidate]
+            winner = candidate
+
+    print(f'---------------------------') 
+    print(f'Winner: {winner}')
+    print(f'---------------------------')    
