@@ -29,7 +29,7 @@ total_sum = 0
 #Set variable for previous row to 0 initially
 previous_row = 0
 
-#open the file as csv
+#open the csv file
 with open(Pybank_csv, newline = '', encoding = 'utf-8') as csvfile:
     
     #decipher the file for python

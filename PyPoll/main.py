@@ -16,7 +16,7 @@ total_votes = 0
 #Set initial variable for the highest amount of votes (winner)
 max_votes = 0
 
-#open the file as csv
+#open the csv file
 with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
     
     #decipher the file for python
@@ -25,17 +25,16 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
     #Read header, store the header row
     csvheader = next(csvfile)
   
-    #Loop through the rows in the list
+    #Loop through the rows in the data list
     for row in csvreader:
 
-        #loop through and use a counter to calculate how many votes total
+        #as it loops, use a counter to calculate how many votes total
         total_votes = total_votes + 1
 
-        
-        #Set a value for the name of the candidate
+        #Set a variable for candidate's name and define the proper index
         candidate = row[2]
 
-        #loop through and make a list of candidates that obtained votes, without duplicates
+        #as it loops, make a list of candidates that obtained votes, without duplicates
         if row[2] not in candidates:
             candidates.append(candidate)
         
@@ -43,7 +42,7 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
             candidate_votes_dict[candidate] = 0
         candidate_votes_dict[candidate] = candidate_votes_dict[candidate] + 1
 
-    #Print first part of results in GitBash so that they don't loop later
+    #Print first part of results in GitBash 
     print(f'Election Results')
     print(f'---------------------------')
     print(f'Total Votes: {total_votes}')
@@ -59,20 +58,17 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
         txtfile.write(f'---------------------------\n') 
 
 
-        #Calculates percentage of votes for each candidate
+        #Calculates percentage of votes for each candidate, ensures it will be in decimal format and displayed as a percentage
         for candidate in candidate_votes_dict:
             percentage = float(candidate_votes_dict[candidate])/float(total_votes) * 100
 
-            #Declare a variable for printing each candidate's stats
-            candidate_data = (f'{candidate}: {percentage: .3f}% ({candidate_votes_dict[candidate]})\n')
+            #Write each candidate's stats in the txt file - nothing that the percentage will go out 3 decimal places
+            txtfile.write(f'{candidate}: {percentage: .3f}% ({candidate_votes_dict[candidate]})\n')
 
-            #Write each candidate's stats in the txt file
-            txtfile.write(candidate_data)
+            #Print each candidate's stats in GitBash - nothing that the percentage will go out 3 decimal places
+            print(f'{candidate}: {percentage: .3f}% ({candidate_votes_dict[candidate]})')
 
-            #Print each candidate's stats in GitBash
-            print(candidate_data)
-
-            #Search for the largest vote count by candidate. Store the largest and store the accompanying candidate 
+            #Search for the largest vote count by candidate. Store the largest and store the accompanying candidate as winner
             if candidate_votes_dict[candidate] > max_votes:
                 max_votes = candidate_votes_dict[candidate]
                 winner = candidate
@@ -86,7 +82,3 @@ with open(Pypoll_csv, newline = '', encoding = 'utf-8') as csvfile:
         txtfile.write(f'---------------------------\n')
         txtfile.write(f'Winner: {winner}\n')
         txtfile.write(f'---------------------------\n')
-
-
-
-           
